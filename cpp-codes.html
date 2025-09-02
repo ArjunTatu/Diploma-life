@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My C++ Codes</title>
+<!-- Prism CSS for syntax highlighting -->
+<link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.css" rel="stylesheet"/>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #f0f4f8, #d9e2ec);
+    margin: 0;
+    padding: 20px;
+  }
+
+  h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+  }
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .code-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s;
+  }
+
+  .code-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  }
+
+  .code-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #1a73e8;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .buttons a, .buttons button {
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .view-btn {
+    background-color: #28a745;
+  }
+
+  .view-btn:hover {
+    background-color: #218838;
+  }
+
+  .download-btn {
+    background-color: #007bff;
+  }
+
+  .download-btn:hover {
+    background-color: #0069d9;
+  }
+
+  pre {
+    margin: 0;
+    width: 100%;
+    max-height: 300px;
+    overflow-x: auto;
+    overflow-y: auto;
+    background: #2d2d2d;
+    border-radius: 8px;
+    padding: 10px;
+    display: none; /* hidden by default, will show when View is clicked */
+  }
+</style>
+</head>
+<body>
+<h1>My C++ Codes</h1>
+<div class="container">
+  <!-- Code Card 1 -->
+  <div class="code-card">
+    <div class="code-name">Addition Program</div>
+    <div class="buttons">
+      <button class="view-btn" onclick="toggleView(this)">View</button>
+      <a class="download-btn" href="codes/Addition.cpp" download="addition.cpp">Download</a>
+    </div>
+    <!-- Code goes inside this pre/code block -->
+    <pre><code class="language-cpp">
+#include <iostream>
+using namespace std;
+int main()
+{
+    int a, b, sum;
+    cout << "Enter First number : ";
+    cin >> a;
+    cout << "Enter Second number : ";
+    cin >> b;
+    sum = a + b;
+    cout << "Addition = " << sum;
+    return 0;
+}
+    </code></pre>
+  </div>
+
+  <!-- Code Card 2 -->
+  <div class="code-card">
+    <div class="code-name">Subtraction Program</div>
+    <div class="buttons">
+      <button class="view-btn" onclick="toggleView(this)">View</button>
+      <a class="download-btn" href="codes/Subtraction" download="subtraction.cpp">Download</a>
+    </div>
+    <!-- Code goes inside this pre/code block -->
+    <pre><code class="language-cpp">
+#include <iostream>
+using namespace std;
+int main()
+{
+    int a, b, sub;
+    cout << "Enter First number : ";
+    cin >> a;
+    cout << "Enter Second number : ";
+    cin >> b;
+    sub = a - b;
+    cout << "Subtraction = " << sub;
+    return 0;
+}
+    </code></pre>
+  </div>
+  
+  <!-- Code Card 3 -->
+  <div class="code-card">
+    <div class="code-name">Multiplication Program</div>
+    <div class="buttons">
+      <button class="view-btn" onclick="toggleView(this)">View</button>
+      <a class="download-btn" href="codes/Multiplication.cpp" download="multiplication.cpp">Download</a>
+    </div>
+    <!-- Code goes inside this pre/code block -->
+    <pre><code class="language-cpp">
+#include <iostream>
+using namespace std;
+int main()
+{
+    int a, b, mul;
+    cout << "Enter First number : ";
+    cin >> a;
+    cout << "Enter Second number : ";
+    cin >> b;
+    mul = a * b;
+    cout << "Multiplication = " << mul;
+    return 0;
+}
+    </code></pre>
+  </div>
+  
+  <!-- Code Card 4 -->
+  <div class="code-card">
+    <div class="code-name">Division Program</div>
+    <div class="buttons">
+      <button class="view-btn" onclick="toggleView(this)">View</button>
+      <a class="download-btn" href="codes/Division.cpp" download="division.cpp">Download</a>
+    </div>
+    <!-- Code goes inside this pre/code block -->
+    <pre><code class="language-cpp">
+#include <iostream>
+using namespace std;
+int main()
+{
+    float a, b, div;
+    cout << "Enter First number : ";
+    cin >> a;
+    cout << "Enter Second number : ";
+    cin >> b;
+    div = a / b;
+    cout << "Division = " << div;
+    return 0;
+}
+    </code></pre>
+  </div>
+
+  <!-- Add more code cards here -->
+</div>
+
+<!-- Prism JS -->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script>
+
+<script>
+  // Toggle code view inside its own card
+  function toggleView(button) {
+    const card = button.closest('.code-card'); // find parent card
+    const pre = card.querySelector('pre'); // get code block
+    pre.style.display = pre.style.display === 'block' ? 'none' : 'block';
+  }
+</script>
+</body>
+</html>

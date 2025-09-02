@@ -1,0 +1,430 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Songs &#127926;</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: linear-gradient(45deg, #fcd2d2, #d9e5ff);
+    }
+
+    header {
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(10px);
+      padding: 18px;
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: bold;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+    /* Search bar */
+    .search-container {
+      padding: 10px;
+      text-align: center;
+      background: rgba(255,255,255,0.6);
+    }
+    #search {
+      padding: 8px;
+      width: 90%;
+      max-width: 400px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    /* Playlist */
+    .playlist {
+      flex: 1;
+      padding: 10px 0;
+    }
+
+    .song {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: background 0.2s;
+      background: rgba(255,255,255,0.4);
+      backdrop-filter: blur(5px);
+    }
+
+    .song:hover {
+      background: rgba(255,255,255,0.6);
+    }
+
+    .song-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .song-number {
+      width: 20px;
+      text-align: center;
+      color: #444;
+      font-size: 0.9rem;
+    }
+
+    .song-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .song-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #111;
+    }
+    .song-artist {
+      font-size: 0.85rem;
+      color: #555;
+    }
+
+    .play-btn {
+      background: none;
+      border: none;
+      color: #1db954;
+      font-size: 1.2rem;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .song:hover .play-btn {
+      opacity: 1;
+    }
+
+    /* Player Bar */
+    .player-bar {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(10px);
+      padding: 12px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      position: sticky;
+      bottom: 0;
+    }
+
+    .player-info {
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+      color: #222;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 6px;
+    }
+
+    .controls button {
+      background: none;
+      border: none;
+      color: #222;
+      cursor: pointer;
+      font-size: 1.3rem;
+      transition: color 0.2s;
+    }
+    .controls button:hover {
+      color: #1db954;
+    }
+
+    .seek-container, .volume-container {
+      width: 100%;
+      max-width: 450px;
+      margin: 4px 0;
+    }
+
+    input[type=range] {
+      width: 100%;
+      cursor: pointer;
+      accent-color: #1db954;
+    }
+  </style>
+</head>
+<body>
+
+  <header>My Songs &#127926;</header>
+
+  <!-- Search bar -->
+  <div class="search-container">
+    <input type="text" id="search" placeholder="Search song...">
+  </div>
+
+  <div class="playlist" id="playlist">
+    <div class="song" data-src="songs/song1.mp3" data-title="Shri Krishna Flute" data-artist="Artist 1">
+      <div class="song-left">
+        <div class="song-number">1</div>
+        <div class="song-info">
+          <div class="song-title">Shri Krishna Flute</div>
+          <div class="song-artist">Artist 1</div>
+        </div>
+      </div>
+      <button class="play-btn">&#9654;</button>
+    </div>
+    <div class="song" data-src="songs/Excuses.mp3" data-title="Excuses" data-artist="Artist 2">
+      <div class="song-left">
+        <div class="song-number">2</div>
+        <div class="song-info">
+          <div class="song-title">Excuses</div>
+          <div class="song-artist">Artist 2</div>
+        </div>
+      </div>
+      <button class="play-btn">&#9654;</button>
+    </div>
+    <div class="song" data-src="songs/Chudi Jo Khankee.mp3" data-title="Chudi Jo Khankee" data-artist="Artist 3">
+      <div class="song-left">
+        <div class="song-number">3</div>
+        <div class="song-info">
+          <div class="song-title">Chudi Jo Khankee</div>
+          <div class="song-artist">Artist 3</div>
+        </div>
+      </div>
+      <button class="play-btn">&#9654;</button>
+    </div>
+    <div class="song" data-src="songs/Senorita.mp3" data-title="Senorita" data-artist="Artist 1">
+      <div class="song-left">
+        <div class="song-number">4</div>
+        <div class="song-info">
+          <div class="song-title">Senorita</div>
+          <div class="song-artist">Artist 4</div>
+        </div>
+      </div>
+      <button class="play-btn">&#9654;</button>
+    </div>
+    <div class="song" data-src="songs/Ve Maahi.mp3" data-title="Ve Maahi" data-artist="Artist 1">
+      <div class="song-left">
+        <div class="song-number">5</div>
+        <div class="song-info">
+          <div class="song-title">Ve Maahi</div>
+          <div class="song-artist">Artist 5</div>
+        </div>
+      </div>
+      <button class="play-btn">&#9654;</button>
+    </div>
+    <div class="song" data-src="songs/No Love.mp3" data-title="No Love" data-artist="Artist 1">
+      <div class="song-left">
+        <div class="song-number">6</div>
+        <div class="song-info">
+          <div class="song-title">No Love</div>
+          <div class="song-artist">Artist 6</div>
+        </div>
+      </div>
+      <button class="play-btn">&#9654;</button>
+    </div>
+    <div class="song" data-src="songs/Tera Fitoor.mp3" data-title="Tera Fitoor" data-artist="Artist 1">
+      <div class="song-left">
+        <div class="song-number">7</div>
+        <div class="song-info">
+          <div class="song-title">Tera Fitoor</div>
+          <div class="song-artist">Artist 7</div>
+        </div>
+      </div>
+      <button class="play-btn">&#9654;</button>
+    </div>
+    <div class="song" data-src="songs/Up To U.mp3" data-title="Up To U" data-artist="Artist 1">
+      <div class="song-left">
+        <div class="song-number">8</div>
+        <div class="song-info">
+          <div class="song-title">Up To U</div>
+          <div class="song-artist">Artist 8</div>
+        </div>
+      </div>
+      <button class="play-btn">&#9654;</button>
+    </div>
+    <div class="song" data-src="songs/Ghoonghat Ki Aad Se.mp3" data-title="Ghoonghat Ki Aad Se" data-artist="Artist 1">
+      <div class="song-left">
+        <div class="song-number">9</div>
+        <div class="song-info">
+          <div class="song-title">Ghoonghat Ki Aad Se</div>
+          <div class="song-artist">Artist 9</div>
+        </div>
+      </div>
+      <button class="play-btn">&#9654;</button>
+    </div>
+    <div class="song" data-src="Ghoonghat Mein Chand Hoga" data-title="Ghoonghat Mein Chand Hoga" data-artist="Artist 1">
+      <div class="song-left">
+        <div class="song-number">10</div>
+        <div class="song-info">
+          <div class="song-title">Ghoonghat Mein Chand Hoga</div>
+          <div class="song-artist">Artist 10</div>
+        </div>
+      </div>
+      <button class="play-btn">&#9654;</button>
+    </div>
+    <div class="song" data-src="songs/Thodi Si Daaru.mp3" data-title="Thodi Si Daaru" data-artist="Artist 3">
+      <div class="song-left">
+        <div class="song-number">11</div>
+        <div class="song-info">
+          <div class="song-title">Thodi Si Daaru</div>
+          <div class="song-artist">Artist 11</div>
+        </div>
+      </div>
+      <button class="play-btn">&#9654;</button>
+    </div>
+    <div class="song" data-src="songs/Thoda thoda pyaar.mp3" data-title="Thoda thoda pyaar" data-artist="Artist 3">
+      <div class="song-left">
+        <div class="song-number">12</div>
+        <div class="song-info">
+          <div class="song-title">Thoda thoda pyaar</div>
+          <div class="song-artist">Artist 12</div>
+        </div>
+      </div>
+      <button class="play-btn">&#9654;</button>
+    </div>
+    <div class="song" data-src="songs/Thodi Si Daaru.mp3" data-title="Thodi Si Daaru" data-artist="Artist 3">
+      <div class="song-left">
+        <div class="song-number">13</div>
+        <div class="song-info">
+          <div class="song-title">Thodi Si Daaru</div>
+          <div class="song-artist">Artist 13</div>
+        </div>
+      </div>
+      <button class="play-btn">&#9654;</button>
+    </div>
+    <div class="song" data-src="songs/Thodi Si Daaru.mp3" data-title="Thodi Si Daaru" data-artist="Artist 3">
+      <div class="song-left">
+        <div class="song-number">14</div>
+        <div class="song-info">
+          <div class="song-title">Thodi Si Daaru</div>
+          <div class="song-artist">Artist 15</div>
+        </div>
+      </div>
+      <button class="play-btn">&#9654;</button>
+    </div>
+    <div class="song" data-src="songs/Thodi Si Daaru.mp3" data-title="Thodi Si Daaru" data-artist="Artist 3">
+      <div class="song-left">
+        <div class="song-number">15</div>
+        <div class="song-info">
+          <div class="song-title">Thodi Si Daaru</div>
+          <div class="song-artist">Artist 15</div>
+        </div>
+      </div>
+      <button class="play-btn">&#9654;</button>
+    </div>
+  
+  </div>
+
+  <!-- Player Bar -->
+  <div class="player-bar">
+    <div class="player-info" id="player-info">No song playing</div>
+    <div class="controls">
+      <button id="prev">&#9198;</button>
+      <button id="play-pause">&#9654;</button>
+      <button id="next">&#9197;</button>
+    </div>
+    <div class="seek-container">
+      <input type="range" id="seek-bar" value="0">
+    </div>
+    <div class="volume-container">
+      <input type="range" id="volume-bar" min="0" max="1" step="0.01" value="1">
+    </div>
+  </div>
+
+  <audio id="audio"></audio>
+
+  <script>
+    const audio = document.getElementById("audio");
+    const playPauseBtn = document.getElementById("play-pause");
+    const prevBtn = document.getElementById("prev");
+    const nextBtn = document.getElementById("next");
+    const seekBar = document.getElementById("seek-bar");
+    const volumeBar = document.getElementById("volume-bar");
+    const playerInfo = document.getElementById("player-info");
+    const songs = document.querySelectorAll(".song");
+    const search = document.getElementById("search");
+    let currentIndex = -1;
+
+    function loadSong(index) {
+      const song = songs[index];
+      audio.src = song.getAttribute("data-src");
+      playerInfo.textContent = song.getAttribute("data-title")
+      currentIndex = index;
+      audio.play();
+      playPauseBtn.innerHTML = "&#9208;";
+    }
+
+    songs.forEach((song, index) => {
+      song.addEventListener("click", () => {
+        loadSong(index);
+      });
+      song.querySelector(".play-btn").addEventListener("click", (e) => {
+        e.stopPropagation();
+        loadSong(index);
+      });
+    });
+
+    playPauseBtn.addEventListener("click", () => {
+      if (audio.src) {
+        if (audio.paused) {
+          audio.play();
+          playPauseBtn.innerHTML = "&#9208;";
+        } else {
+          audio.pause();
+          playPauseBtn.innerHTML = "&#9654;";
+        }
+      }
+    });
+
+    prevBtn.addEventListener("click", () => {
+      if (currentIndex > 0) {
+        loadSong(currentIndex - 1);
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (currentIndex < songs.length - 1) {
+        loadSong(currentIndex + 1);
+      }
+    });
+
+    // update seek bar
+    audio.addEventListener("timeupdate", () => {
+      seekBar.value = (audio.currentTime / audio.duration) * 100 || 0;
+    });
+
+    // jump to position when clicking seek bar
+    seekBar.addEventListener("input", () => {
+      audio.currentTime = (seekBar.value / 100) * audio.duration;
+    });
+
+    volumeBar.addEventListener("input", () => {
+      audio.volume = volumeBar.value;
+    });
+
+    audio.addEventListener("ended", () => {
+      if (currentIndex < songs.length - 1) {
+        loadSong(currentIndex + 1);
+      } else {
+        playPauseBtn.innerHTML = "&#9654;";
+      }
+    });
+
+    // Search filter
+    search.addEventListener("input", () => {
+      const filter = search.value.toLowerCase();
+      songs.forEach(song => {
+        const title = song.getAttribute("data-title").toLowerCase();
+        const artist = song.getAttribute("data-artist").toLowerCase();
+        if (title.includes(filter) || artist.includes(filter)) {
+          song.style.display = "";
+        } else {
+          song.style.display = "none";
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
