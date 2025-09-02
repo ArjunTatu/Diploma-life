@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard - Arjun</title>
+  <style>
+    /* Reset & Global */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "Segoe UI", sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      background: #0f2027;
+      color: #f1f1f1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Particle canvas */
+    #particles-js {
+      position: fixed;
+      width: 100%; height: 100%;
+      top: 0; left: 0;
+      z-index: -1;
+    }
+
+    /* Header */
+    header {
+      background: rgba(0,0,0,0.7);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h2 { font-size: 20px; color: #4facfe; }
+    .menu-btn {
+      font-size: 20px; background: none; border: none;
+      color: #fff; cursor: pointer;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: -100%; left: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.9);
+      display: flex; flex-direction: column;
+      text-align: center;
+      padding: 20px;
+      transition: top 0.4s ease;
+      z-index: 999;
+    }
+    .sidebar.active { top: 0; }
+    .sidebar a {
+      color: #f1f1f1; text-decoration: none;
+      padding: 12px; font-size: 16px;
+      border-radius: 6px; margin: 5px 0;
+      transition: background 0.3s;
+    }
+    .sidebar a:hover { background: #4facfe; color: #000; }
+
+    /* Content */
+    .content {
+      padding: 30px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .name-heading {
+      font-size: 34px; font-weight: bold; text-align: center;
+      margin-bottom: 20px;
+      background: linear-gradient(45deg,#ff4e50,#f9d423,#4facfe,#00f2fe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shine 5s infinite linear;
+      background-size: 300% 300%;
+    }
+    @keyframes shine {
+      from { background-position: 0% 50%; }
+      to { background-position: 200% 50%; }
+    }
+
+    .card-container {
+      display: flex; flex-wrap: wrap;
+      gap: 20px; justify-content: center;
+    }
+    .card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(6px);
+      border-radius: 12px;
+      padding: 20px; width: 250px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: transform 0.3s, background 0.3s;
+      cursor: pointer;
+    }
+    .card:hover { transform: translateY(-6px); background: rgba(79,172,254,0.2); }
+    .card h3 { margin-bottom: 8px; color: #4facfe; }
+    .card p { font-size: 14px; color: #ccc; }
+    .card a {
+      display: inline-block; margin-top: 12px;
+      color: #00f2fe; text-decoration: none; font-weight: bold;
+    }
+
+    footer {
+      text-align: center; padding: 12px; font-size: 14px; color: #fff;
+      background: rgba(0,0,0,0.8);
+    }
+
+    /* Mini Player */
+    .mini-player {
+      background: #1e1e1e;
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px solid #333;
+    }
+    .mini-player span {
+      font-size: 14px;
+      color: #f1f1f1;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .mini-player button {
+      background: #ff4e50;
+      border: none; color: #fff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    audio {
+      display: none; /* hidden but functional */
+    }
+  </style>
+</head>
+<body>
+  <!-- Particles Background -->
+  <div id="particles-js"></div>
+
+  <!-- Header -->
+  <header>
+    <h2>Dashboard</h2>
+    <button class="menu-btn">&#9776;</button>
+  </header>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <a href="notes.html">Notes</a>
+    <a href="pyq.html">PYQs</a>
+    <a href="cpp-codes.html">C++ Codes</a>
+    <a href="progress.html">Progress</a>
+    <a href="projects.html">Projects</a>
+    <a href="music.html">Music</a>
+    <a href="index.html">Logout</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <div class="name-heading">🚀 Arjun Tatu 🚀</div>
+    <h1 style="text-align:center;">Welcome Back!</h1>
+    <p style="text-align:center;margin-bottom:20px;">Select a section below to continue.</p>
+
+    <div class="card-container">
+      <div class="card" data-link="notes.html">
+        <h3>Notes</h3>
+        <p>Organized C / C++ notes with view & download.</p>
+        <a href="notes.html">Open →</a>
+      </div>
+      <div class="card" data-link="cpp-codes.html">
+        <h3>Codes</h3>
+        <p>All your programs with syntax highlighting.</p>
+        <a href="cpp-codes.html">Open →</a>
+      </div>
+      <div class="card" data-link="progress.html">
+        <h3>Progress</h3>
+        <p>Check your semester-wise marks & grades.</p>
+        <a href="progress.html">Open →</a>
+      </div>
+      <div class="card" data-link="projects.html">
+        <h3>Projects</h3>
+        <p>Gallery of your professional projects.</p>
+        <a href="projects.html">Open →</a>
+      </div>
+      <div class="card" data-link="pyq.html">
+        <h3>PYQs</h3>
+        <p>Previous year papers.</p>
+        <a href="pyq.html">Open →</a>
+      </div>
+      <div class="card" data-link="music.html">
+        <h3>Music</h3>
+        <p>Spotify-style music player with your playlist.</p>
+        <a href="music.html">Open →</a>
+      </div>
+      <div class="card" data-link="contact.html">
+        <h3>Contact</h3>
+        <p>Contact <Details></Details>.</p>
+        <a href="contact.html">Open →</a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <footer>
+    © 2025 Arjun Tatu
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script>
+        // Check login
+    if(localStorage.getItem("isLoggedIn") !== "true"){
+      window.location.href = "index.html"; // redirect to login
+    }
+    // Sidebar toggle
+    const menuBtn = document.querySelector(".menu-btn");
+    const sidebar = document.querySelector(".sidebar");
+    menuBtn.addEventListener("click", () => sidebar.classList.toggle("active"));
+    document.addEventListener("click", (e) => {
+      if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) sidebar.classList.remove("active");
+    });
+
+    // Card click (ignore button clicks)
+    document.querySelectorAll(".card").forEach(card => {
+      card.addEventListener("click", (e) => {
+        if (e.target.tagName.toLowerCase() !== "a") {
+          window.location.href = card.getAttribute("data-link");
+        }
+      });
+    });
+
+    // Particles
+    particlesJS("particles-js", {
+      particles: { number: { value: 80 }, color: { value: "#fff" }, size: { value: 3, random: true }, line_linked: { enable: true, color: "#4facfe" }, move: { enable: true, speed: 3 } },
+      interactivity: { detect_on: "canvas", events: { onhover: { enable: true, mode: "repulse" } } },
+      retina_detect: true
+    });
+  </script>
+</body>
+</html>

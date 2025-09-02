@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Directory</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter', sans-serif; }
+  body, html { width:100%; height:100%; overflow-x:hidden; }
+
+  body {
+    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    padding:40px 20px;
+    position:relative;
+    min-height:100vh;
+  }
+
+  h1 {
+    color: #fff;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    margin-bottom: 50px;
+    font-size: 2.5rem;
+    opacity:0;
+    animation: fadeInDown 1s forwards;
+  }
+
+  @keyframes fadeInDown {
+    from {opacity:0; transform: translateY(-50px);}
+    to {opacity:1; transform: translateY(0);}
+  }
+
+  .container {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    width:100%;
+    max-width:1200px;
+    perspective: 1500px;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    color:#fff;
+    transform: translateY(100vh) scale(0.8);
+    opacity:0;
+    cursor: pointer;
+    transition: transform 0.5s, box-shadow 0.5s;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card.show {
+    transform: translateY(0) scale(1);
+    opacity:1;
+  }
+
+  .card:hover {
+    transform: translateY(0) scale(1.05) rotateY(5deg) rotateX(5deg);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  }
+
+  .card h2 { font-size:1.6rem; margin-bottom:8px; color:#fff; transition: color 0.3s; }
+  .card:hover h2 { color:#16a085; }
+
+  .role { color: #e0e0e0; margin-bottom: 20px; font-weight: 500; }
+
+  .info { display:flex; align-items:center; margin:10px 0; transition: transform 0.3s, color 0.3s; }
+  .info:hover { transform: translateX(5px); color: #16a085; }
+  .info a { color:#fff; font-weight:500; text-decoration:none; transition: color 0.3s; }
+  .info a:hover { color:#16a085; text-decoration:underline; }
+  .icon { margin-right:10px; font-weight:bold; color:#16a085; transition: transform 0.3s, color 0.3s; }
+  .card:hover .icon { transform: scale(1.2) rotate(15deg); color:#3498db; }
+
+  #particles {
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    z-index:0;
+    pointer-events:none;
+  }
+
+  .card.enlarge {
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%) scale(1.2) rotateX(0deg) rotateY(0deg);
+    z-index:10;
+    box-shadow:0 30px 80px rgba(0,0,0,0.5);
+  }
+</style>
+</head>
+<body>
+
+<h1>Contact Our Team</h1>
+
+<div class="container">
+  <div class="card">
+    <h2>Arjun Tatu</h2>
+    <p class="role">Project Manager</p>
+    <p class="info"><span class="icon">&#128222;</span>Mobile: <a href="tel:+91 94237 10121">+91 94237 10121</a></p>
+    <p class="info"><span class="icon">&#128172;</span>WhatsApp: <a href="https://wa.me/919423710121" target="_blank">+91 94237 10121</a></p>
+    <p class="info"><span class="icon">&#128231;</span>Email: <a href="mailto:arjuntatu03@gmail.com">arjuntatu03@gmail.com</a></p>
+  </div>
+
+  <div class="card">
+    <h2>Shejal Tatu</h2>
+    <p class="role">Software Engineer</p>
+    <p class="info"><span class="icon">&#128222;</span>Mobile: <a href="tel:+91 87882 67531">+91 87882 67531</a></p>
+    <p class="info"><span class="icon">&#128172;</span>WhatsApp: <a href="https://wa.me/8788267531" target="_blank">+91 87882 67531</a></p>
+    <p class="info"><span class="icon">&#128231;</span>Email: <a href="mailto:shejaltatu@gmail.com">shejaltatu@gmail.com</a></p>
+  </div>
+
+  <div class="card">
+    <h2>Karan Tatu</h2>
+    <p class="role">Designer</p>
+    <p class="info"><span class="icon">&#128222;</span>Mobile: <a href="tel:+91 93225 32771">+91 93225 32771</a></p>
+    <p class="info"><span class="icon">&#128172;</span>WhatsApp: <a href="https://wa.me/9322532771" target="_blank">+91 93225 32771</a></p>
+    <p class="info"><span class="icon">&#128231;</span>Email: <a href="mailto:karantatu05@gmail.com">karantatu05@gmail.com</a></p>
+  </div>
+</div>
+
+<canvas id="particles"></canvas>
+
+<script>
+const cards = document.querySelectorAll('.card');
+cards.forEach((card, i) => {
+  setTimeout(() => { card.classList.add('show'); }, i*300);
+});
+
+// Click to enlarge
+cards.forEach(card => {
+  card.addEventListener('click', () => {
+    if(card.classList.contains('enlarge')){
+      card.classList.remove('enlarge');
+    } else {
+      cards.forEach(c => c.classList.remove('enlarge'));
+      card.classList.add('enlarge');
+    }
+  });
+});
+
+// Floating particles
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let w, h;
+let particlesArray = [];
+
+function initCanvas(){
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', initCanvas);
+initCanvas();
+
+class Particle {
+  constructor(){
+    this.x = Math.random() * w;
+    this.y = Math.random() * h;
+    this.radius = Math.random()*3 + 1;
+    this.speedX = (Math.random()-0.5) * 0.5;
+    this.speedY = (Math.random()-0.5) * 0.5;
+  }
+  draw(){
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    ctx.fill();
+  }
+  update(mouse){
+    // Move away from mouse/card
+    if(mouse){
+      let dx = this.x - mouse.x;
+      let dy = this.y - mouse.y;
+      let dist = Math.sqrt(dx*dx + dy*dy);
+      if(dist < 100){
+        let angle = Math.atan2(dy, dx);
+        let force = (100 - dist) / 10;
+        this.x += Math.cos(angle) * force;
+        this.y += Math.sin(angle) * force;
+      }
+    }
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if(this.x<0 || this.x>w) this.speedX*=-1;
+    if(this.y<0 || this.y>h) this.speedY*=-1;
+    this.draw();
+  }
+}
+
+function initParticles(){
+  particlesArray = [];
+  for(let i=0;i<120;i++){
+    particlesArray.push(new Particle());
+  }
+}
+initParticles();
+
+let mouse = null;
+canvas.addEventListener('mousemove', (e) => {
+  mouse = { x: e.clientX, y: e.clientY };
+});
+canvas.addEventListener('mouseleave', () => { mouse = null; });
+
+function animate(){
+  ctx.clearRect(0,0,w,h);
+  particlesArray.forEach(p => p.update(mouse));
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+</html>

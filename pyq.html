@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Polytechnic Question Papers</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(-45deg, #1e3c72, #2a5298, #6dd5ed, #2193b0);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  header {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 20px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  }
+
+  .semester, .subject, .year { margin-bottom: 15px; }
+
+  h2, h3, h4 {
+    cursor: pointer;
+    padding: 12px 20px;
+    border-radius: 10px;
+    transition: all 0.3s;
+    background: linear-gradient(90deg, #0073e6, #00aaff);
+    color: #fff;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  }
+  h2:hover, h3:hover, h4:hover {
+    transform: translateX(5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+  }
+
+  .subjects, .years, .papers { display: none; margin-top: 10px; }
+
+  .subject, .year {
+    background: rgba(255,255,255,0.9);
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .paper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f4f8fc;
+    margin: 8px 0;
+    padding: 10px 15px;
+    border-radius: 6px;
+    transition: all 0.3s;
+  }
+  .paper:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  .buttons a {
+    text-decoration: none;
+    margin-left: 8px;
+    padding: 6px 14px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    transition: background 0.3s;
+  }
+  .view { background: #28a745; }
+  .download { background: #007bff; }
+  .view:hover { background: #218838; }
+  .download:hover { background: #0056b3; }
+
+  @media (max-width: 768px) {
+    header { font-size: 22px; }
+    .buttons a { font-size: 12px; padding: 5px 10px; }
+  }
+  @media (max-width: 480px) {
+    .paper { flex-direction: column; align-items: flex-start; }
+    .buttons { margin-top: 6px; display: flex; gap: 6px; }
+    h2, h3, h4 { font-size: 16px; padding: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header>Polytechnic Question Papers</header>
+
+<div class="container" id="papers-container"></div>
+
+<script>
+const data = {
+  "semesters": [
+    {
+      "name": "Semester 1",
+      "subjects": [
+        {"name": "Mathematics 1", "years": {"2023": {"Summer": "papers/sem1_math1_summer2023.pdf", "Winter": "papers/sem1_math1_winter2023.pdf"}}},
+        {"name": "Physics 1", "years": {"2023": {"Summer": "papers/sem1_physics1_summer2023.pdf", "Winter": "papers/sem1_physics1_winter2023.pdf"}}}
+      ]
+    },
+    {
+      "name": "Semester 2",
+      "subjects": [
+        {"name": "Mathematics 2", "years": {"2023": {"Summer": "papers/sem2_math2_summer2023.pdf"}}},
+        {"name": "Chemistry", "years": {"2023": {"Summer": "papers/sem2_chem_summer2023.pdf"}}}
+      ]
+    },
+    {
+      "name": "Semester 3",
+      "subjects": [
+        {"name": "Computer Science", "years": {"2023": {"Summer": "papers/sem3_cs_summer2023.pdf"}}},
+        {"name": "Electrical", "years": {"2023": {"Winter": "papers/sem3_electrical_winter2023.pdf"}}}
+      ]
+    },
+    {
+      "name": "Semester 4",
+      "subjects": [
+        {"name": "Electronics", "years": {"2023": {"Summer": "papers/sem4_electronics_summer2023.pdf"}}},
+        {"name": "Mechanics", "years": {"2023": {"Winter": "papers/sem4_mechanics_winter2023.pdf"}}}
+      ]
+    },
+    {
+      "name": "Semester 5",
+      "subjects": [
+        {"name": "Civil Engineering", "years": {"2023": {"Summer": "papers/sem5_civil_summer2023.pdf"}}},
+        {"name": "Environmental Science", "years": {"2023": {"Winter": "papers/sem5_env_winter2023.pdf"}}}
+      ]
+    },
+    {
+      "name": "Semester 6",
+      "subjects": [
+        {"name": "Project Work", "years": {"2023": {"Summer": "papers/sem6_project_summer2023.pdf"}}},
+        {"name": "Management", "years": {"2023": {"Winter": "papers/sem6_management_winter2023.pdf"}}}
+      ]
+    }
+  ]
+};
+
+function loadPapers() {
+  const container = document.getElementById("papers-container");
+
+  data.semesters.forEach(sem => {
+    const semDiv = document.createElement("div");
+    semDiv.className = "semester";
+    semDiv.innerHTML = `<h2 onclick="toggle(this)">${sem.name}</h2><div class="subjects"></div>`;
+    const subjectsDiv = semDiv.querySelector(".subjects");
+
+    sem.subjects.forEach(sub => {
+      const subDiv = document.createElement("div");
+      subDiv.className = "subject";
+      subDiv.innerHTML = `<h3 onclick="toggle(this)">${sub.name}</h3><div class="years"></div>`;
+      const yearsDiv = subDiv.querySelector(".years");
+
+      for (const year in sub.years) {
+        const yearDiv = document.createElement("div");
+        yearDiv.className = "year";
+        yearDiv.innerHTML = `<h4 onclick="toggle(this)">${year}</h4><div class="papers"></div>`;
+        const papersDiv = yearDiv.querySelector(".papers");
+
+        for (const season in sub.years[year]) {
+          const file = sub.years[year][season];
+          papersDiv.innerHTML += `
+            <div class="paper">
+              <span>${season}</span>
+              <div class="buttons">
+                <a href="${file}" target="_blank" class="view">View</a>
+                <a href="${file}" download class="download">Download</a>
+              </div>
+            </div>`;
+        }
+        yearsDiv.appendChild(yearDiv);
+      }
+      subjectsDiv.appendChild(subDiv);
+    });
+    container.appendChild(semDiv);
+  });
+}
+
+function toggle(el) {
+  const next = el.nextElementSibling;
+  if (next) next.style.display = next.style.display === "block" ? "none" : "block";
+}
+
+loadPapers();
+</script>
+
+</body>
+</html>

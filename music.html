@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Player - Arjun Hub 🎵</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    h1 {
+      text-align: center;
+      margin: 15px 0;
+      font-size: 26px;
+      background: linear-gradient(45deg, #ff4e50, #f9d423, #4facfe, #00f2fe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .playlist { flex: 1; overflow-y: auto; padding: 15px; }
+    .song {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 12px 18px;
+      margin: 8px 0;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.3s, transform 0.2s;
+      cursor: pointer;
+    }
+    .song:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-2px); }
+    .song.active { background: linear-gradient(45deg, #4facfe, #00f2fe); color: #121212; font-weight: bold; }
+    .title { flex: 1; }
+    .song button {
+      background: #2196f3;
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      pointer-events: none; /* disable button-only click so whole box works */
+    }
+    .player {
+      background: #1e1e1e;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-top: 2px solid #333;
+    }
+    .player-controls { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
+    .player button {
+      background: #ff4e50;
+      border: none;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    input[type="range"] { width: 100%; cursor: pointer; }
+    .progress-container { width: 100%; max-width: 600px; display: flex; align-items: center; gap: 10px; }
+    .time { font-size: 12px; color: #bbb; }
+  </style>
+</head>
+<body>
+  <h1>🎶 Arjun’s Music Hub 🎶</h1>
+
+  <!-- Playlist -->
+  <div class="playlist" id="playlist">
+    <div class="song" data-src="songs\Chudi Jo Khankee.mp3"><span class="title">Chudi Jo Khankee</span> <button>▶</button></div>
+    <div class="song" data-src="songs\Excuses.mp3"><span class="title">Excuses</span> <button>▶</button></div>
+    <div class="song" data-src="songs\Fearless pt II.mp3"><span class="title">Fearless pt II</span> <button>▶</button></div>
+    <div class="song" data-src="songs\Ghoonghat Ki Aad Se.mp3"><span class="title">Ghoonghat Ki Aad Se</span> <button>▶</button></div>
+    <div class="song" data-src="songs\Ghoonghat Mein Chand Hoga.mp3"><span class="title">Ghoonghat Mein Chand Hoga</span> <button>▶</button></div>
+    <div class="song" data-src="songs\Khiladi Title Track.mp3"><span class="title">Khiladi Title Track</span> <button>▶</button></div>
+    <div class="song" data-src="songs\Mal Mal.mp3"><span class="title">Mal Mal</span> <button>▶</button></div>
+    <div class="song" data-src="songs\No Love.mp3"><span class="title">No Love</span> <button>▶</button></div>
+    <div class="song" data-src="songs\O Shera-Teer Te Taj - Full Song _ Kesari 2 _ Akshay Kumar, R. Madhavan, Ananya P _ Sangtar, Shashwat.mp3"><span class="title">O Shera-Teer Te Taj</span> <button>▶</button></div>
+    <div class="song" data-src="songs\Sanju_ KAR HAR MAIDAAN FATEH Full Video Song _ Ranbir Kapoor _ Rajkumar Hirani.mp3"><span class="title">KAR HAR MAIDAAN FATEH</span> <button>▶</button></div>
+    <div class="song" data-src="songs\Senorita.mp3"><span class="title">Senorita</span> <button>▶</button></div>
+    <div class="song" data-src="songs\song1.mp3"><span class="title">Rang hoya lal</span> <button>▶</button></div>
+    <div class="song" data-src="songs\Tera Fitoor.mp3"><span class="title">Tera Fitoor</span> <button>▶</button></div>
+    <div class="song" data-src="songs\Tere Hawaale (Full Video) Laal Singh Chaddha _ Aamir,Kareena _ Arijit,Shilpa _ Pritam,Amitabh,Advait (1).mp3"><span class="title">Tere Hawaale</span> <button>▶</button></div>
+    <div class="song" data-src="songs\Teri Mitti - Lyrical _ Kesari _ Akshay Kumar & Parineeti Chopra _ Arko _ B Praak_ Manoj Muntashir.mp3"><span class="title">Teri Mitti</span> <button>▶</button></div>
+    <div class="song" data-src="songs\Thoda thoda pyaar.mp3"><span class="title">Thoda thoda pyaar</span> <button>▶</button></div>
+    <div class="song" data-src="songs\Thodi Si Daaru.mp3"><span class="title">Thodi Si Daaru</span> <button>▶</button></div>
+    <div class="song" data-src="songs\Up To U.mp3"><span class="title">Up To U</span> <button>▶</button></div>
+    <div class="song" data-src="songs\Ve Maahi.mp3"><span class="title">Ve Maahi</span> <button>▶</button></div>
+  </div>
+
+  <!-- Player -->
+  <div class="player">
+    <div class="player-controls">
+      <button id="prev">⏮ Prev</button>
+      <button id="playPause">▶ Play</button>
+      <button id="next">⏭ Next</button>
+    </div>
+    <div class="progress-container">
+      <span class="time" id="currentTime">0:00</span>
+      <input type="range" id="progress" value="0" min="0" max="100">
+      <span class="time" id="duration">0:00</span>
+    </div>
+    <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+  </div>
+
+  <script>
+    const playlist = document.querySelectorAll(".song");
+    const playPauseBtn = document.getElementById("playPause");
+    const prevBtn = document.getElementById("prev");
+    const nextBtn = document.getElementById("next");
+    const progress = document.getElementById("progress");
+    const currentTimeEl = document.getElementById("currentTime");
+    const durationEl = document.getElementById("duration");
+    const volume = document.getElementById("volume");
+
+    let audio = new Audio();
+    let currentSongIndex = 0;
+    let isPlaying = false;
+
+    function loadSong(index) {
+      playlist.forEach(song => song.classList.remove("active"));
+      playlist[index].classList.add("active");
+      audio.src = playlist[index].getAttribute("data-src");
+    }
+
+    function playSong() {
+      audio.play();
+      isPlaying = true;
+      playPauseBtn.textContent = "⏸ Pause";
+      saveState();
+    }
+
+    function pauseSong() {
+      audio.pause();
+      isPlaying = false;
+      playPauseBtn.textContent = "▶ Play";
+      saveState();
+    }
+
+    function togglePlayPause() { isPlaying ? pauseSong() : playSong(); }
+    function prevSong() { currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length; loadSong(currentSongIndex); playSong(); }
+    function nextSong() { currentSongIndex = (currentSongIndex + 1) % playlist.length; loadSong(currentSongIndex); playSong(); }
+
+    function updateProgress() {
+      progress.value = (audio.currentTime / audio.duration) * 100 || 0;
+      currentTimeEl.textContent = formatTime(audio.currentTime);
+      durationEl.textContent = formatTime(audio.duration);
+      saveState();
+    }
+
+    function setProgress() { audio.currentTime = (progress.value / 100) * audio.duration; }
+    function formatTime(sec) {
+      if (isNaN(sec)) return "0:00";
+      const m = Math.floor(sec / 60), s = Math.floor(sec % 60);
+      return `${m}:${s < 10 ? "0" : ""}${s}`;
+    }
+
+    function saveState() {
+      localStorage.setItem("musicState", JSON.stringify({
+        index: currentSongIndex,
+        time: audio.currentTime,
+        playing: isPlaying,
+        volume: audio.volume
+      }));
+    }
+
+    function restoreState() {
+      const state = JSON.parse(localStorage.getItem("musicState"));
+      if (state) {
+        currentSongIndex = state.index;
+        loadSong(currentSongIndex);
+        audio.currentTime = state.time || 0;
+        audio.volume = state.volume ?? 1;
+        if (state.playing) playSong();
+      } else {
+        loadSong(currentSongIndex);
+      }
+    }
+
+    // Event Listeners
+    playPauseBtn.addEventListener("click", togglePlayPause);
+    prevBtn.addEventListener("click", prevSong);
+    nextBtn.addEventListener("click", nextSong);
+    progress.addEventListener("input", setProgress);
+    volume.addEventListener("input", () => { audio.volume = volume.value; saveState(); });
+    audio.addEventListener("timeupdate", updateProgress);
+    audio.addEventListener("ended", nextSong);
+
+    // 🔥 Make whole song box clickable for play/pause toggle
+    playlist.forEach((song, index) => {
+      song.addEventListener("click", () => {
+        if (currentSongIndex === index && isPlaying) {
+          pauseSong();
+        } else {
+          currentSongIndex = index;
+          loadSong(currentSongIndex);
+          playSong();
+        }
+      });
+    });
+
+    restoreState();
+  </script>
+</body>
+</html>
