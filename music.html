@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Music Player - Arjun Hub 🎵</title>
+  <title>Music Player - Universal Music Hub 🎵</title>
   <style>
     body {
       margin: 0;
@@ -21,6 +21,15 @@
       background: linear-gradient(45deg, #ff4e50, #f9d423, #4facfe, #00f2fe);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+    }
+    /* 🔍 Search bar style */
+    #searchBar {
+      margin: 0 15px 10px 15px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: none;
+      width: calc(100% - 30px);
+      font-size: 14px;
     }
     .playlist { flex: 1; overflow-y: auto; padding: 15px; }
     .song {
@@ -44,7 +53,7 @@
       padding: 6px 12px;
       border-radius: 6px;
       cursor: pointer;
-      pointer-events: none; /* disable button-only click so whole box works */
+      pointer-events: none;
     }
     .player {
       background: #1e1e1e;
@@ -72,6 +81,9 @@
 <body>
   <h1>🎶 Universal Music Hub 🎶</h1>
 
+  <!-- 🔍 Search bar -->
+  <input type="text" id="searchBar" placeholder="Search song...">
+
   <!-- Playlist -->
   <div class="playlist" id="playlist">
     <div class="song" data-src="songs\Chudi Jo Khankee.mp3"><span class="title">Chudi Jo Khankee</span> <button>▶</button></div>
@@ -93,8 +105,13 @@
     <div class="song" data-src="songs\Thodi Si Daaru.mp3"><span class="title">Thodi Si Daaru</span> <button>▶</button></div>
     <div class="song" data-src="songs\Up To U.mp3"><span class="title">Up To U</span> <button>▶</button></div>
     <div class="song" data-src="songs\Ve Maahi.mp3"><span class="title">Ve Maahi</span> <button>▶</button></div>
-    <div class="song" data-src="songs\Get Low.mp3"><span class="title">Get Low.mp3</span> <button>▶</button></div>
-    <div class="song" data-src="songs\Dil Laga Liya.mp3"><span class="title">Dil Laga Liya.mp3</span> <button>▶</button></div>
+    <div class="song" data-src="songs\Get Low.mp3"><span class="title">Get Low</span> <button>▶</button></div>
+    <div class="song" data-src="songs\Dil Laga Liya.mp3"><span class="title">Dil Laga Liya</span> <button>▶</button></div>
+    <div class="song" data-src="songs\Bahut Jatate Ho Chah Humse.mp3"><span class="title">Bahut Jatate Ho Chah Humse</span> <button>▶</button></div>
+    <div class="song" data-src="songs\Shape of You.mp3"><span class="title">Shape of You</span> <button>▶</button></div>
+    <div class="song" data-src="songs\Har Kisi Ko.mp3"><span class="title">Har Kisi Ko</span> <button>▶</button></div>
+    <div class="song" data-src="songs\On & On.mp3"><span class="title">On & On</span> <button>▶</button></div>
+    <div class="song" data-src="songs\Long Drive Pa Chal _ Lofi Song.mp3"><span class="title">Long Drive Pa Chal _ Lofi Song</span> <button>▶</button></div>
   </div>
 
   <!-- Player -->
@@ -121,6 +138,7 @@
     const currentTimeEl = document.getElementById("currentTime");
     const durationEl = document.getElementById("duration");
     const volume = document.getElementById("volume");
+    const searchBar = document.getElementById("searchBar");
 
     let audio = new Audio();
     let currentSongIndex = 0;
@@ -208,9 +226,16 @@
       });
     });
 
+    // 🔍 Search filter
+    searchBar.addEventListener("input", () => {
+      const term = searchBar.value.toLowerCase();
+      playlist.forEach(song => {
+        const title = song.querySelector(".title").textContent.toLowerCase();
+        song.style.display = title.includes(term) ? "flex" : "none";
+      });
+    });
+
     restoreState();
   </script>
 </body>
 </html>
-
-
